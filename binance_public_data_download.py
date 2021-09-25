@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 import argparse
 
 web_path0 = "https://data.binance.vision/"
+data_info_path = "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix="
 
 parser = argparse.ArgumentParser(description='Used to download binance public data from '+web_path0)
 parser.add_argument('--spot_or_futures', default='spot', type=str,
@@ -46,7 +47,7 @@ else:
 
 print("show all data type in "+path)
 print("--------------------------------------------------")
-response = getResponse("https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix="+path)
+response = getResponse(data_info_path+path)
 things_from_the_webpage = ET.fromstring(response)
 for i in things_from_the_webpage.iter():
     if "Prefix" in i.tag and i.text is not None:
@@ -60,7 +61,7 @@ else:
 
 print("show all crypto type in "+path)
 print("--------------------------------------------------")
-response = getResponse("https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix="+path)
+response = getResponse(data_info_path+path)
 things_from_the_webpage = ET.fromstring(response)
 for i in things_from_the_webpage.iter():
     if "Prefix" in i.tag and i.text is not None:
@@ -68,7 +69,7 @@ for i in things_from_the_webpage.iter():
 print("--------------------------------------------------")
 
 def get_all_related_symbols(path, symbol):
-    info = getResponse("https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix="+path)
+    info = getResponse(data_info_path+path)
     info_tree = ET.fromstring(info)
     related_symbols = []
     for item in info_tree.iter():
@@ -90,7 +91,7 @@ for related_symbol in related_symbols:
 
     print("show all delta time for "+str(related_symbol))
     print("--------------------------------------------------")
-    response = getResponse("https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix="+path)
+    response = getResponse(data_info_path+path)
     things_from_the_webpage = ET.fromstring(response)
     for i in things_from_the_webpage.iter():
         if "Prefix" in i.tag and i.text is not None:
@@ -103,7 +104,7 @@ for related_symbol in related_symbols:
         path = "data/" + args.spot_or_future + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/" + related_symbol + "/" + args.delta_time + "/"
         
     print("in "+path)
-    response = getResponse("https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix="+path)
+    response = getResponse(data_info_path+path)
     things_from_the_webpage = ET.fromstring(response)
     flag = False
     for i in things_from_the_webpage.iter():
