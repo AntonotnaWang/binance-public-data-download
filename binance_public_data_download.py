@@ -29,7 +29,7 @@ parser.add_argument('--output_path', default="data", type=str,
                         help='path to save the data')
 args = parser.parse_args()
 
-assert args.spot_or_future == "spot" or args.spot_or_future == "futures"
+assert args.spot_or_futures == "spot" or args.spot_or_futures == "futures"
 assert args.coin_m_or_usdt_m_for_future == "cm" or args.coin_m_or_usdt_m_for_future == "um"
 
 def getResponse(url):
@@ -40,10 +40,10 @@ def getResponse(url):
         print("Error receiving data", operUrl.getcode())
     return data
 
-if args.spot_or_future == "spot":
-    path = "data/" + args.spot_or_future + "/daily/"
+if args.spot_or_futures == "spot":
+    path = "data/" + args.spot_or_futures + "/daily/"
 else:
-    path = "data/" + args.spot_or_future + "/" + args.coin_m_or_usdt_m_for_future + "/daily/"
+    path = "data/" + args.spot_or_futures + "/" + args.coin_m_or_usdt_m_for_future + "/daily/"
 
 print("show all data type in "+path)
 print("--------------------------------------------------")
@@ -54,10 +54,10 @@ for i in things_from_the_webpage.iter():
         print(i.text)
 print("--------------------------------------------------")
 
-if args.spot_or_future == "spot":
-    path = "data/" + args.spot_or_future + "/daily/" + args.data_type + "/"
+if args.spot_or_futures == "spot":
+    path = "data/" + args.spot_or_futures + "/daily/" + args.data_type + "/"
 else:
-    path = "data/" + args.spot_or_future + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/"
+    path = "data/" + args.spot_or_futures + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/"
 
 print("show all crypto type in "+path)
 print("--------------------------------------------------")
@@ -84,10 +84,10 @@ def get_all_related_symbols(path, symbol):
 related_symbols = get_all_related_symbols(path, args.crypto_type)
 
 for related_symbol in related_symbols:
-    if args.spot_or_future == "spot":
-        path = "data/" + args.spot_or_future + "/daily/" + args.data_type + "/" + related_symbol + "/"
+    if args.spot_or_futures == "spot":
+        path = "data/" + args.spot_or_futures + "/daily/" + args.data_type + "/" + related_symbol + "/"
     else:
-        path = "data/" + args.spot_or_future + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/" + related_symbol + "/"
+        path = "data/" + args.spot_or_futures + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/" + related_symbol + "/"
 
     print("show all delta time for "+str(related_symbol))
     print("--------------------------------------------------")
@@ -98,10 +98,10 @@ for related_symbol in related_symbols:
             print(i.text)
     print("--------------------------------------------------")
 
-    if args.spot_or_future == "spot":
-        path = "data/" + args.spot_or_future + "/daily/" + args.data_type + "/" + related_symbol + "/" + args.delta_time + "/"
+    if args.spot_or_futures == "spot":
+        path = "data/" + args.spot_or_futures + "/daily/" + args.data_type + "/" + related_symbol + "/" + args.delta_time + "/"
     else:
-        path = "data/" + args.spot_or_future + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/" + related_symbol + "/" + args.delta_time + "/"
+        path = "data/" + args.spot_or_futures + "/" + args.coin_m_or_usdt_m_for_future + "/daily/" + args.data_type + "/" + related_symbol + "/" + args.delta_time + "/"
         
     print("in "+path)
     response = getResponse(data_info_path+path)
